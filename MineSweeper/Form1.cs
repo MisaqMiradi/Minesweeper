@@ -27,7 +27,7 @@ namespace MineSweeper
 
 
     public partial class MainForm : Form
-    { }
+    { 
 
         private TextBox openGamesTextBox;
         private TextBox playerNameTextBox;
@@ -457,3 +457,4 @@ namespace MineSweeper
 
  }
 
+}
