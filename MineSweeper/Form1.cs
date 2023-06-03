@@ -11,6 +11,41 @@ using MineSweeper;
 
 namespace MineSweeper
 {
+   
+    public class Game
+    {
+        // Field declarations go here
+        public enum GameDifficulty
+        {
+            Easy,
+            Medium,
+            Expert,
+            Custom
+        }
+        // The current game difficulty
+        private GameDifficulty currentDifficulty;
+
+
+        // Event declaration
+        public event Action<GameDifficulty> DifficultyChanged;
+
+        // Properties and methods go here
+                // Method to change game difficulty
+        public void ChangeDifficulty(GameDifficulty newDifficulty)
+        {
+            if(currentDifficulty != newDifficulty)
+            {
+                currentDifficulty = newDifficulty;
+                DifficultyChanged?.Invoke(newDifficulty);  // trigger the event
+            }
+        
+        }
+
+
+    }
+
+
+
     public partial class MainForm : Form
     {
         private Game game;
@@ -396,14 +431,30 @@ namespace MineSweeper
             }
         }
         
-        public enum Difficulty
+      
+
+        public GameDifficulty Difficulty 
         {
-            Easy,
-            Medium,
-            Expert,
-            Custom
+            get => _difficulty;
+            set
+            {
+                if (_difficulty != value)
+                {
+                    _difficulty = value;
+                    DifficultyChanged?.Invoke(_difficulty);
+                }
+            }
         }
-    }
+      
+        
+        private GameDifficulty _difficulty;
+
+        public Game(GameDifficulty difficulty)
+        {
+            _difficulty = difficulty;
+        }
+
+     }
 
 
 }

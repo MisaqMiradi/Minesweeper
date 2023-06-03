@@ -29,3 +29,4 @@ C:\Users\Qzekai\Documents\MineSweeper\obj\Debug\MineSweeper.csproj.GenerateResou
 C:\Users\Qzekai\Documents\MineSweeper\obj\Debug\MineSweeper.csproj.CoreCompileInputs.cache
 C:\Users\Qzekai\Documents\MineSweeper\obj\Debug\MineSweeper.exe
 C:\Users\Qzekai\Documents\MineSweeper\obj\Debug\MineSweeper.pdb
+C:\Users\Qzekai\Documents\MineSweeper\obj\Debug\MineSweeper.Game.resources
