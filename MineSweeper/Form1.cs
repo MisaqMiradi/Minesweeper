@@ -7,12 +7,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-
+using MineSweeper;
 
 namespace MineSweeper
 {
     public partial class MainForm : Form
     {
+        private Game game;
+
         private TextBox openGamesTextBox;
         private TextBox playerNameTextBox;
         private RadioButton easyRadioButton;
@@ -29,8 +31,6 @@ namespace MineSweeper
         private ToolStripMenuItem customMenuItem;
         private ToolStripMenuItem closeAllMenuItem;
         private ToolStripMenuItem exitMenuItem;
-        Game game;
-        game = new Game();
 
         public MainForm()
         {
@@ -227,6 +227,57 @@ namespace MineSweeper
             Form2 gameForm = new Form2(GetDifficultyLabel(), row, col, size, mines);
             gameForm.Show();
         }
+        
+        private void radioButton1_CheckedChanged(object sender, EventArgs e)
+        {
+            if (this.radioButton1.Checked)
+            {
+                // Assume radioButton1 represents an "Easy" difficulty
+                this.game.SetDifficulty(GameDifficulty.Easy);
+            }
+        }
+
+        private void radioButton1_CheckedChanged(object sender, EventArgs e)
+        {
+            if (this.radioButton1.Checked)
+            {
+                // Assume radioButton1 represents an "Easy" difficulty
+                this.game.SetDifficulty(GameDifficulty.Medium);
+            }
+        }
+
+        private void radioButton1_CheckedChanged(object sender, EventArgs e)
+        {
+            if (this.radioButton1.Checked)
+            {
+                // Assume radioButton1 represents an "Easy" difficulty
+                this.game.SetDifficulty(GameDifficulty.Hard);
+            }
+        }
+
+
+        private void radioButton1_CheckedChanged(object sender, EventArgs e)
+        {
+            if (this.radioButton1.Checked)
+            {
+                // Assume radioButton1 represents an "Easy" difficulty
+                this.game.SetDifficulty(GameDifficulty.Custom);
+            }
+        }
+
+        private void ShowCustomGameDialog()
+        {
+            var dialog = new CustomGameDialog();
+
+            if (dialog.ShowDialog() == DialogResult.OK)
+            {
+                // Assume these methods exist in your `Game` class
+                this.game.SetRows(dialog.Row);
+                this.game.SetColumns(dialog.Column);
+                this.game.SetMines(dialog.Mines);
+            }
+        }
+
 
 
         private void CloseAllGames(object sender, EventArgs e)
