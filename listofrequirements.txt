@@ -1,0 +1,40 @@
+List of Requirements:
+
+Use C# Programming Language.
+Use "Windows Forms App (.Net Framework)/C#" as the project type.
+Implement the Minesweeper game.
+The game must be a single-player puzzle video game.
+The objective of the game is to clear a rectangular board containing hidden mines without detonating any of them.
+The game should provide clues about the number of neighboring mines in each field.
+Use the functioning, but incomplete implementation available on Canvas as a starting point.
+The game should be playable on a rectangular board divided into cells.
+The cells can be in three states: uncovered, covered, and flagged.
+A covered cell is blank and clickable, while an uncovered cell is exposed, containing a number or a mine.
+Clicking on a cell with a mine ends the game.
+Flagging a cell implies that the player thinks there is a mine underneath it.
+The game should deduct an available mine from the display when a cell is flagged.
+Players must logically deduce the locations of mines based on the numbers given by uncovered cells.
+To win the game, all non-mine cells must be uncovered.
+Use Visual Studio 2022's main form as the application's main interface.
+The main form must include:
+One TextBox object for displaying the number of currently open games.
+One TextBox object for receiving the player name from the user.
+Four radio buttons for labels Easy, Medium, Expert, and Custom (Medium is checked by default).
+One Button object to start a new game.
+One Button object to end all currently open games.
+One MenuStrip object with items "Play a new game," "Close all games," and "Exit."
+The "Play a new game" item should have a sub-menu containing "Easy," "Medium," and "Expert."
+Clicking on "Play a new game" should result in one of the following possibilities:
+If any radio button except "Custom" is checked, a new form containing an empty board is shown.
+If the "Custom" radio button is checked, a dialog should appear asking the user to input three parameters: row, col, and mines.
+The input parameters should be validated, and the user should be asked to enter them again if they don't meet the specified conditions.
+The specified game parameters should be used to generate a new game board.
+The "Easy," "Medium," and "Expert" game parameters are predefined.
+The game board should be made up of row*col buttons.
+The application should display a clock and the number of mines minus the number of flags.
+The game and the clock should start when the player makes the first left-click on one of the buttons on the board.
+Mines should be uniformly, but randomly distributed over the board, avoiding the first-click square and its surrounding squares.
+Right-clicking on a covered cell should place a flag on that cell.
+Pausing the clock of a game should occur if the form containing the game gets deactivated, and the clock should resume when the form gets re-activated.
+The game form should be closed with a message "You lost!" or "You won in XY seconds!" when the game is lost or won.
+The program should ask the user for confirmation before closing a game that has been started.
