@@ -12,43 +12,22 @@ using MineSweeper;
 namespace MineSweeper
 {
    
-    public class Game
-    {
-        // Field declarations go here
-        public enum GameDifficulty
+    private Game game;
+
+        public MainForm()
         {
-            Easy,
-            Medium,
-            Expert,
-            Custom
+            InitializeComponent();
+
+            game = new Game();
+            game.DifficultyChanged += OnDifficultyChanged;
+            
+            // set initial difficulty
+            game.ChangeDifficulty(Game.GameDifficulty.Easy);
         }
-        // The current game difficulty
-        private GameDifficulty currentDifficulty;
-
-
-        // Event declaration
-        public event Action<GameDifficulty> DifficultyChanged;
-
-        // Properties and methods go here
-                // Method to change game difficulty
-        public void ChangeDifficulty(GameDifficulty newDifficulty)
-        {
-            if(currentDifficulty != newDifficulty)
-            {
-                currentDifficulty = newDifficulty;
-                DifficultyChanged?.Invoke(newDifficulty);  // trigger the event
-            }
-        
-        }
-
-
-    }
-
 
 
     public partial class MainForm : Form
-    {
-        private Game game;
+    { }
 
         private TextBox openGamesTextBox;
         private TextBox playerNameTextBox;
@@ -66,6 +45,28 @@ namespace MineSweeper
         private ToolStripMenuItem customMenuItem;
         private ToolStripMenuItem closeAllMenuItem;
         private ToolStripMenuItem exitMenuItem;
+
+
+         private void radioButton1_CheckedChanged(object sender, EventArgs e)
+        {
+            game.ChangeDifficulty(Game.GameDifficulty.Easy);
+        }
+
+        private void radioButton2_CheckedChanged(object sender, EventArgs e)
+        {
+            game.ChangeDifficulty(Game.GameDifficulty.Medium);
+        }
+
+        private void radioButton3_CheckedChanged(object sender, EventArgs e)
+        {
+            game.ChangeDifficulty(Game.GameDifficulty.Hard);
+        }
+
+        private void radioButton4_CheckedChanged(object sender, EventArgs e)
+        {
+            ShowCustomGameDialog();
+        }
+
 
         public MainForm()
         {
@@ -454,7 +455,5 @@ namespace MineSweeper
             _difficulty = difficulty;
         }
 
-     }
+ }
 
-
-}
