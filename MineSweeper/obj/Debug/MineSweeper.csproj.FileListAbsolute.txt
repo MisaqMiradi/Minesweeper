@@ -21,12 +21,3 @@ C:\Users\drbor\Downloads\MineSweeper\MineSweeper\obj\Debug\MineSweeper.csproj.Ge
 C:\Users\drbor\Downloads\MineSweeper\MineSweeper\obj\Debug\MineSweeper.csproj.CoreCompileInputs.cache
 C:\Users\drbor\Downloads\MineSweeper\MineSweeper\obj\Debug\MineSweeper.exe
 C:\Users\drbor\Downloads\MineSweeper\MineSweeper\obj\Debug\MineSweeper.pdb
-C:\Users\Qzekai\Documents\MineSweeper\obj\Debug\MineSweeper.csproj.AssemblyReference.cache
-C:\Users\Qzekai\Documents\MineSweeper\obj\Debug\MineSweeper.MainForm.resources
-C:\Users\Qzekai\Documents\MineSweeper\obj\Debug\MineSweeper.Form2.resources
-C:\Users\Qzekai\Documents\MineSweeper\obj\Debug\MineSweeper.Properties.Resources.resources
-C:\Users\Qzekai\Documents\MineSweeper\obj\Debug\MineSweeper.csproj.GenerateResource.cache
-C:\Users\Qzekai\Documents\MineSweeper\obj\Debug\MineSweeper.csproj.CoreCompileInputs.cache
-C:\Users\Qzekai\Documents\MineSweeper\obj\Debug\MineSweeper.exe
-C:\Users\Qzekai\Documents\MineSweeper\obj\Debug\MineSweeper.pdb
-C:\Users\Qzekai\Documents\MineSweeper\obj\Debug\MineSweeper.Game.resources

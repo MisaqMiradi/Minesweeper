@@ -1,36 +1,31 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Diagnostics.Tracing;
 using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace MineSweeper
 {
     public partial class Form2 : Form
     {
-        private Button[][] buttons;
-        private Field field;
-
-        public Form2(string text, int row, int col, int size, int mines)
+        public Form2()
         {
             InitializeComponent();
-            InitializeGameBoard(text, row, col, size, mines);
         }
-
-        private void InitializeGameBoard(string text, int row, int col, int size, int mines)
-        {
+        public Form2(String text,int row, int col,int size,int mines) : this(){
             this.Text = text;
-            field = new Field(row, col, mines);
+            field = new Field(row, col,mines);
             this.ClientSize = new Size(col * size, row * size);
             buttons = new Button[row][];
-            
             for (int i = 0; i < row; i++)
-            {
                 buttons[i] = new Button[col];
-            }
-
-            for (int i = 0; i < row; i++)
-            {
-                for (int j = 0; j < col; j++)
+            foreach (int i in Enumerable.Range(0,row))
+                foreach (int j in Enumerable.Range(0,col))
                 {
                     buttons[i][j] = new Button();
                     buttons[i][j].Text = "";
@@ -42,140 +37,99 @@ namespace MineSweeper
                     buttons[i][j].MouseUp += new MouseEventHandler(Button_Click);
                     this.Controls.Add(buttons[i][j]);
                 }
-            }
         }
-
-        private void Button_Click(object sender, MouseEventArgs e)
-        {
-            Button button = (Button)sender;
-            int temp = button.Name.IndexOf(",");
-            int click_x = Convert.ToInt32(button.Name.Substring(0, temp));
-            int click_y = Convert.ToInt32(button.Name.Substring(temp + 1));
-
+        private void Button_Click(object sender, MouseEventArgs e) {
+            Button b = (Button)sender;
+            int temp = b.Name.IndexOf(",");
+            int click_x = Int16.Parse(b.Name.Substring(0, temp));
+            int click_y = Int16.Parse(b.Name.Substring(temp + 1));
             switch (e.Button)
             {
                 case MouseButtons.Left:
-                    if (!field.Started)
+                    // Left click
+                    if (!this.field.Started)
+                        this.field.Initialize(click_x, click_y);
+                    int n = this.field.CountMines(click_x, click_y);
+                    if (this.field.IsMine(click_x, click_y))
                     {
-                        field.Initialize(click_x, click_y);
-                    }
-
-                    if (field.IsMine(click_x, click_y))
-                    {
-                        button.BackColor = Color.Red;
+                        b.BackColor = Color.Red;
                         MessageBox.Show("Game Over! You clicked on a mine!");
-                    }
-                    else if (!field.Discovered.Contains(click_x * buttons[0].Length + click_y))
-                    {
-                        foreach (int k in field.GetSafeIsland(click_x, click_y))
-                        {
-                            int i = k / buttons[0].Length;
-                            int j = k % buttons[0].Length;
-                            buttons[i][j].BackColor = Color.LightGray;
-                            int m = field.CountMines(i, j);
-
-                            if (m > 0)
-                            {
-                                buttons[i][j].Text = m.ToString();
-                                buttons[i][j].BackColor = Color.LightBlue;
-                            }
-                            else
-                            {
-                                buttons[i][j].Enabled = false;
-                            }
-                        }
-
-                        if (field.Win())
-                        {
-                            MessageBox.Show("Congratulations! You discovered all safe squares!");
-                        }
-                    }
-
-                    break;
-
-                case MouseButtons.Right:
-                    if (field.Discovered.Contains(click_x * buttons[0].Length + click_y))
-                    {
                         break;
                     }
-
-                    if (field.Flagged.Contains(click_x * buttons[0].Length + click_y))
+                    if (this.field.Discovered.Contains(click_x * buttons[0].Length + click_y))
+                        break;
+                    foreach (int k in this.field.GetSafeIsland(click_x, click_y))
                     {
-                        button.BackColor = Color.White;
+                        int i = k / buttons[0].Length;
+                        int j = k % buttons[0].Length;
+                        buttons[i][j].BackColor = Color.LightGray;
+                        int m = this.field.CountMines(i, j);
+                        if (m > 0) {
+                            buttons[i][j].Text = m + "";
+                            buttons[i][j].BackColor = Color.LightBlue;
+                        }else
+                            buttons[i][j].Enabled = false;
+                    }
+                    if(field.Win())
+                        MessageBox.Show("Congratulations! You discovered all safe squares!");
+                    break;
+                case MouseButtons.Right:
+                    // Right click
+                    if (this.field.Discovered.Contains(click_x * buttons[0].Length + click_y))
+                        break;
+                    if(field.Flagged.Contains(click_x * buttons[0].Length + click_y))
+                    {
+                        b.BackColor = Color.White;
                         field.Flagged.Remove(click_x * buttons[0].Length + click_y);
                     }
                     else
                     {
-                        button.BackColor = Color.Green;
+                        b.BackColor = Color.Green;
                         field.Flagged.Add(click_x * buttons[0].Length + click_y);
-                    }
-
+                    }  
                     break;
-
                 case MouseButtons.Middle:
-                    if (!field.Discovered.Contains(click_x * buttons[0].Length + click_y))
-                    {
+                    if (!this.field.Discovered.Contains(click_x * buttons[0].Length + click_y))
                         break;
-                    }
-
-                    int flaggedCount = 0;
-                    foreach (int k in field.GetNeighbors(click_x, click_y))
-                    {
+                    int Flagged_Count = 0;
+                    foreach (int k in this.field.GetNeighbors(click_x, click_y))
                         if (field.Flagged.Contains(k))
-                        {
-                            flaggedCount++;
-                        }
-                    }
-
-                    if (field.CountMines(click_x, click_y) != flaggedCount)
-                    {
+                            Flagged_Count++;
+                    if (this.field.CountMines(click_x, click_y) != Flagged_Count)
                         break;
-                    }
-
-                    foreach (int k in field.GetNeighbors(click_x, click_y))
+                    foreach (int k in this.field.GetNeighbors(click_x, click_y))
                     {
-                        int i = k / buttons[0].Length;
-                        int j = k % buttons[0].Length;
-
                         if (field.Flagged.Contains(k) || field.Discovered.Contains(k))
-                        {
                             continue;
-                        }
-
-                        if (field.IsMine(i, j))
+                        if (this.field.IsMine(k / buttons[0].Length, k % buttons[0].Length))
                         {
-                            button.BackColor = Color.Red;
+                            b.BackColor = Color.Red;
                             MessageBox.Show("Game Over! You clicked on a mine!");
                             break;
                         }
-
-                        foreach (int l in field.GetSafeIsland(i, j))
+                        foreach (int l in this.field.GetSafeIsland(k/ buttons[0].Length, k% buttons[0].Length))
                         {
-                            int x = l / buttons[0].Length;
-                            int y = l % buttons[0].Length;
-
-                            buttons[x][y].BackColor = Color.LightGray;
-                            int m = field.CountMines(x, y);
-
+                            int i = l / buttons[0].Length;
+                            int j = l % buttons[0].Length;
+                            buttons[i][j].BackColor = Color.LightGray;
+                            int m = this.field.CountMines(i, j);
                             if (m > 0)
                             {
-                                buttons[x][y].Text = m.ToString();
-                                buttons[x][y].BackColor = Color.LightBlue;
+                                buttons[i][j].Text = m + "";
+                                buttons[i][j].BackColor = Color.LightBlue;
                             }
                             else
-                            {
-                                buttons[x][y].Enabled = false;
-                            }
+                                buttons[i][j].Enabled = false;
                         }
-
                         if (field.Win())
-                        {
                             MessageBox.Show("Congratulations! You discovered all safe squares!");
-                        }
                     }
-
                     break;
             }
+                
+
         }
+        private Button[][] buttons;
+        private Field field;
     }
 }
